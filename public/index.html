@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>fdf</title>
+  <title>Registrierung</title>
   <link rel="stylesheet" href="style.css">
   <link rel="manifest" href="/manifest.json">
 </head>
@@ -13,6 +14,7 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyCyk6aMP1U0WmVmQdDwb8DhwJKk2kszH8I",
@@ -30,10 +32,17 @@
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register("/serviceworker.js");
     }
-
   </script>
-  <h1>Willkommen auf meiner Firebase-Hosting-Website!</h1>
-  <p>Hier ist ein einfaches Beispiel für eine gehostete Webseite.</p>
+  <script defer src="register.js" type="module"></script>
+  <h1>Registrierung</h1>
+  <form id="registrationForm">
+    <label for="email">E-Mail:</label>
+    <input type="email" id="email" name="email" required>
+    <label for="password">Passwort:</label>
+    <input type="password" id="password" name="password" required>
+    <button type="submit">Registrieren</button>
+  </form>
+  <a href="login.html">Du hast schon ein Konto? Logge dich hier ein.</a>
 
 </body>
 
