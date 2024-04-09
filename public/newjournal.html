@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Reiseplaner</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+
+<body>
+    <div class="navbar">
+        <a href="mainpage.html"><span class="material-symbols-outlined">grid_view</span> Dashboard</a>
+        <a href="newjournal.html"><span class="material-symbols-outlined">add_circle</span> Neues Journal</a>
+        <a href="profile.html"><span class="material-symbols-outlined">account_circle</span> Profil</a>
+    </div>
+    <div id="new-journal" class="page">
+        <h1>Neues Journal erstellen</h1>
+        <input type="file" id="image-upload" accept="image/*">
+        <img id="image-preview" src="#" alt="Bildvorschau">
+        <textarea id="text" placeholder="Beschreibe deine Reise..."></textarea>
+        <button id="add-location-btn">Standort hinzufügen</button>
+        <input type="date" id="journal-date">
+        <button id="save-journal-btn">Speichern</button>
+    </div>
+
+    <script defer src="newjournal.js"></script>
+
+</body>
+
+</html>
