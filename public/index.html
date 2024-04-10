@@ -7,43 +7,55 @@
   <title>Registrierung</title>
   <link rel="stylesheet" href="style.css">
   <link rel="manifest" href="/manifest.json">
+  <script defer src="offline.js"></script>
 </head>
 
 <body>
-  <script src="index.js" type="module"></script>
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+  <div id="loading-screen" style="background-color: #F7B8D2;">
+    <img src="logoLadebildschirm.png" alt="Logo">
+  </div>
+  <div id="main-content" class="hidden">
+    <script src="index.js" type="module"></script>
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
+      import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyCyk6aMP1U0WmVmQdDwb8DhwJKk2kszH8I",
-      authDomain: "t6progressivewebapp.firebaseapp.com",
-      databaseURL: "https://t6progressivewebapp-default-rtdb.europe-west1.firebasedatabase.app",
-      projectId: "t6progressivewebapp",
-      storageBucket: "t6progressivewebapp.appspot.com",
-      messagingSenderId: "602714925402",
-      appId: "1:602714925402:web:b3383d35f01da02026ab63",
-      measurementId: "G-7NRERVS911"
-    };
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register("/serviceworker.js");
-    }
-  </script>
-  <script defer src="register.js" type="module"></script>
-  <h1>Registrierung</h1>
-  <form id="registrationForm">
-    <label for="email">E-Mail:</label>
-    <input type="email" id="email" name="email" required>
-    <label for="password">Passwort:</label>
-    <input type="password" id="password" name="password" required>
-    <button type="submit">Registrieren</button>
-  </form>
-  <a href="login.html">Du hast schon ein Konto? Logge dich hier ein.</a>
-
+      const firebaseConfig = {
+        apiKey: "AIzaSyCyk6aMP1U0WmVmQdDwb8DhwJKk2kszH8I",
+        authDomain: "t6progressivewebapp.firebaseapp.com",
+        databaseURL: "https://t6progressivewebapp-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "t6progressivewebapp",
+        storageBucket: "t6progressivewebapp.appspot.com",
+        messagingSenderId: "602714925402",
+        appId: "1:602714925402:web:b3383d35f01da02026ab63",
+        measurementId: "G-7NRERVS911"
+      };
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+      
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register("/serviceworker.js");
+      }
+    </script>
+    <script defer src="register.js" type="module"></script>
+    <div class="register-container">
+      <img src="logoTravelbook.png" alt="Bild" class="login-image">
+      <h1 class="register">Registrierung</h1>
+      <form id="registrationForm">
+        <div class="input-container">
+          <label for="email">E-Mail:</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="input-container">
+          <label for="password">Passwort:</label>
+          <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit" class="registerbutton">Registrieren</button>
+      </form>
+      <a href="login.html" class="registration-link">Du hast schon ein Konto? Logge dich hier ein.</a>
+    </div>
+  </div>
 </body>
 
 </html>

@@ -1,23 +1,33 @@
 <!-- login.html -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
   <link rel="stylesheet" href="style.css">
   <link rel="manifest" href="/manifest.json">
+  <script defer src="offline.js"></script>
 </head>
+
 <body>
   <script defer src="login.js" type="module"></script>
-  <h1>Login</h1>
-  <form id="loginForm">
-    <label for="email">E-Mail:</label>
-    <input type="email" id="email" name="email" required>
-    <label for="password">Passwort:</label>
-    <input type="password" id="password" name="password" required>
-    <button type="submit">Login</button>
-  </form>
-  <a href="index.html">Du hast noch kein Konto? Registriere dich hier.</a>
-</body>
+  <div class="login-container">
+    <h1 class="login">Login</h1>
+    <form id="loginForm">
+      <div class="input-container"> <!-- Neue Klasse für Container der Eingabefelder -->
+        <label for="email">E-Mail:</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <img src="logoTravelbook.png" alt="Bild" class="login-image">
+      <div class="input-container"> <!-- Neue Klasse für Container der Eingabefelder -->
+        <label for="password">Passwort:</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      <button type="submit">Login</button>
+    </form>
+    <a href="index.html" class="registration-link">Du hast noch kein Konto? Registriere dich hier.</a>
+  </div>
+
 </html>
