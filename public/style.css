@@ -18,7 +18,7 @@ a {
     display: flex;
     justify-content: space-around;
     background-color: #f7b8d2;
-    padding: 10px 0;
+    padding: 20px 0;
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -35,6 +35,10 @@ textarea {
     box-sizing: border-box;
 }
 
+input[type="file"] {
+    width: 100%;
+}
+
 button {
     background-color: #f7b8d2;
     color: white;
@@ -47,14 +51,18 @@ button:hover {
 }
 
 .page,
-#add-journal-box {
+#add-journal-box,
+#journalDetailContainer {
     background-color: #FFFFFF;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    margin: 20px 0;
+    margin: 20px 20px;
 }
 
+#journalDetailContainer a {
+    text-decoration: underline;
+}
 
 @media screen and (max-width: 768px) {
 
@@ -64,26 +72,34 @@ button:hover {
         width: 20px;
         height: 20px;
     }
-
-    #dashboard,
-    #add-journal-box {
-        padding: 10px;
-    }
 }
 
 
 textarea {
-    width: 100%;
     height: 150px;
-    resize: vertical;
+    width: 100%;
 }
 
-input[type="text"],
-textarea {
+#search,
+textarea,
+#journal-title {
+    resize: vertical;
     border: 1px solid #CCC;
     padding: 10px;
     border-radius: 5px;
-    margin-top: 10px;
+}
+
+#search,
+#journal-title {
+    width: 97%;
+}
+
+@media (max-width: 768px) {
+
+    #search,
+    #journal-title {
+        width: 93%;
+    }
 }
 
 .navbar a:hover,
@@ -121,16 +137,19 @@ h1 {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    gap: 20px; /* Abstand zwischen den Kacheln */
-    padding: 0 20px; /* Seitenabstand */
+    gap: 20px;
+    /* Abstand zwischen den Kacheln */
+    padding: 0 20px;
+    /* Seitenabstand */
 }
 
 /* Stil für einzelne Journal-Einträge */
 .journal-entry {
-    flex: 0 1 calc(33.333% - 20px); /* Drei Kacheln pro Reihe bei normalem Bildschirm, 20px Abstand berücksichtigen */
+    flex: 0 1 calc(33.333% - 20px);
+    /* Drei Kacheln pro Reihe bei normalem Bildschirm, 20px Abstand berücksichtigen */
     background-color: #FFF;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 15px;
     box-sizing: border-box;
     display: flex;
@@ -138,140 +157,199 @@ h1 {
 }
 
 .journal-entry img {
-    width: 100%; /* Sorgt dafür, dass Bilder die Breite der Kacheln ausfüllen */
-    height: auto; /* Behält das Seitenverhältnis der Bilder bei */
-    border-radius: 4px; /* Optional: Abrunden der Ecken der Bilder */
-    margin-bottom: 10px; /* Abstand zwischen Bild und Text */
+    width: 100%;
+    /* Sorgt dafür, dass Bilder die Breite der Kacheln ausfüllen */
+    height: auto;
+    /* Behält das Seitenverhältnis der Bilder bei */
+    border-radius: 4px;
+    /* Optional: Abrunden der Ecken der Bilder */
+}
+
+.journal-entry p {
+    margin: 0;
 }
 
 @media screen and (max-width: 768px) {
     .journal-entry {
-        flex: 0 1 calc(50% - 20px); /* Zwei Kacheln pro Reihe auf kleineren Bildschirmen */
+        flex: 0 1 calc(50% - 20px);
+        /* Zwei Kacheln pro Reihe auf kleineren Bildschirmen */
     }
 }
 
 @media screen and (max-width: 480px) {
     .journal-entry {
-        flex: 0 1 100%; /* Eine Kachel pro Reihe auf sehr kleinen Bildschirmen */
+        flex: 0 1 100%;
+        /* Eine Kachel pro Reihe auf sehr kleinen Bildschirmen */
     }
 }
 
-.login-container, .register-container {
+.login-container,
+.register-container {
     background-color: #f7f7f7;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    margin: 90px auto; /* Vertikal zentriert */
-    max-width: 400px; /* Maximale Breite */
+    margin: 90px auto;
+    /* Vertikal zentriert */
+    max-width: 400px;
+    /* Maximale Breite */
     border: 2px solid #e66b9e;
-    text-align: center; /* Zentriert den Inhalt horizontal */
+    text-align: center;
+    /* Zentriert den Inhalt horizontal */
 }
- 
+
 .input-container {
-    margin-bottom: 20px; /* Abstand zwischen den Eingabefeldern */
+    margin-bottom: 20px;
+    /* Abstand zwischen den Eingabefeldern */
 }
- 
+
 /* Optionales Styling für die Eingabefelder */
 input[type="email"],
 input[type="password"] {
-    display: block; /* Eingabefelder als Blockelemente anzeigen */
-    width: 100%; /* Volle Breite innerhalb des Containers */
-    padding: 10px; /* Innenabstand */
+    display: block;
+    /* Eingabefelder als Blockelemente anzeigen */
+    width: 100%;
+    /* Volle Breite innerhalb des Containers */
+    padding: 10px;
+    /* Innenabstand */
     border-radius: 5px;
     border: 1px solid #ddd;
     margin-top: 10px;
     box-sizing: border-box;
 }
- 
+
 .login-image {
-  position: absolute; /* Positionierung relativ zum Elternelement */
-  top: 50px; /* Position oberhalb des Containers */
-  left: 50%; /* Zentriert horizontal */
-  transform: translateX(-50%); /* Zentriert horizontal */
-  width: 100px; /* Breite des Bildes */
-  height: auto; /* Automatische Höhe */
-  border-radius: 50%; /* Rundes Bild */
-  border: 2px solid #e66b9e; /* Rahmen um das Bild */
-  background-color: #fff; /* Hintergrundfarbe des Bildes */
-  padding: 5px; /* Innenabstand */
- 
+    position: absolute;
+    /* Positionierung relativ zum Elternelement */
+    top: 50px;
+    /* Position oberhalb des Containers */
+    left: 50%;
+    /* Zentriert horizontal */
+    transform: translateX(-50%);
+    /* Zentriert horizontal */
+    width: 100px;
+    /* Breite des Bildes */
+    height: auto;
+    /* Automatische Höhe */
+    border-radius: 50%;
+    /* Rundes Bild */
+    border: 2px solid #e66b9e;
+    /* Rahmen um das Bild */
+    background-color: #fff;
+    /* Hintergrundfarbe des Bildes */
+    padding: 5px;
+    /* Innenabstand */
+
 }
 
-.login, .register {
-  margin-top: 80px;
+.login,
+.register {
+    margin-top: 80px;
 }
- 
+
 .registration-link {
-  display: block;
-  margin-top: 40px; /* Erhöht den Abstand zum Button */
-  color: #9c274c; /* Dunkelrosa Farbe */
-  text-decoration: none;
+    display: block;
+    margin-top: 40px;
+    /* Erhöht den Abstand zum Button */
+    color: #9c274c;
+    /* Dunkelrosa Farbe */
+    text-decoration: none;
 }
- 
+
 .registration-link:hover {
-  text-decoration: underline; /* Unterstrich beim Überfahren des Links */
+    text-decoration: underline;
+    /* Unterstrich beim Überfahren des Links */
 }
- 
-.registerbutton{
-  margin-top: 20px;
+
+.registerbutton {
+    margin-top: 20px;
 }
-  
+
 .hidden {
-  display: none;
+    display: none;
 }
- 
+
 #loading-screen {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  /* display: flex; */
-  /* justify-content: center; */
-  /* align-items: center; */
-  background-color: #F7B8D2; /* Rosa Hintergrundfarbe */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* display: flex; */
+    /* justify-content: center; */
+    /* align-items: center; */
+    background-color: #F7B8D2;
+    /* Rosa Hintergrundfarbe */
 }
- 
+
 /* CSS für das Bild im Ladebildschirm */
 #loading-screen img {
-  max-width: 100%;
-  max-height: 100%;
+    max-width: 100%;
+    max-height: 100%;
 }
- 
+
 .offlinepage {
-  font-family: Arial, sans-serif;
-  background-color: #f7b8d2; /* Rosa Hintergrundfarbe */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f7b8d2;
+    /* Rosa Hintergrundfarbe */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
 }
- 
+
 .containeroffline {
-  text-align: center;
+    text-align: center;
 }
- 
+
 .paper-plane {
-  font-size: 100px;
+    font-size: 100px;
 }
- 
+
 .loading-circle {
-  display: inline-block;
-  width: 50px;
-  height: 50px;
-  border: 3px solid #ccc;
-  border-top-color: #333;
-  border-radius: 50%;
-  animation: spin 1s infinite linear;
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    border: 3px solid #ccc;
+    border-top-color: #333;
+    border-radius: 50%;
+    animation: spin 1s infinite linear;
 }
+
 .message {
-  font-weight: 300; /* Dünner */
-  margin-top: 10px;
+    font-weight: 300;
+    /* Dünner */
+    margin-top: 10px;
 }
- 
+
 @keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+#add-location-btn,
+#journal-date,
+#save-journal-btn {
+    display: flex;
+    flex-direction: column;
+}
+
+#new-journal-btn {
+    width: 100%;
+}
+
+@media (max-width: 480px) {
+    .login-container,
+    .register-container {
+        width: 80%;
+    }
+};
+
+#new-journal-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
 }

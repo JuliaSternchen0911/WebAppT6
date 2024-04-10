@@ -22,26 +22,23 @@ const journalId = params.get('journalId'); // Extrahiere die Journal-ID aus der 
 if (journalId) {
     const docRef = doc(db, "reiseplaner", journalId);
     getDoc(docRef).then((doc) => {
-        if (doc.exists()) {
-            const data = doc.data();
-            const container = document.getElementById('journalDetailContainer');
-            container.innerHTML = `
+      if (doc.exists()) {
+        const data = doc.data();
+        const container = document.getElementById('journalDetailContainer');
+        container.innerHTML = `
           <h1>${data.title}</h1>
           ${data.imageUrl ? `<img src="${data.imageUrl}" alt="Journal Bild" style="max-width: 100%; height: auto;">` : ''}
           <p><strong>${new Date(data.date).toLocaleDateString()}</strong></p>
-          ${data.location ? `<p>Standort: Latitude: ${data.location.latitude}, Longitude: ${data.location.longitude}</p>` : ''}
+          <p>${data.text}</p>
         `;
-            if (data.location) {
-                const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${data.location.latitude},${data.location.longitude}`;
-                container.innerHTML += `<a href="${mapsUrl}" target="_blank">Auf Karte anzeigen</a>`;
-            }
-            contentHTML += `<p>${data.text}</p>`;
-
-            container.innerHTML = contentHTML;
-        } else {
-            console.log("Kein Dokument gefunden!");
+        if (data.location) {
+            const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${data.location.latitude},${data.location.longitude}`;
+            container.innerHTML += `<a href="${mapsUrl}" target="_blank">Auf Karte anzeigen</a>`;
         }
+      } else {
+        console.log("Kein Dokument gefunden!");
+      }
     }).catch((error) => {
-        console.error("Fehler beim Laden des Dokuments:", error);
+      console.error("Fehler beim Laden des Dokuments:", error);
     });
-}
+  }
