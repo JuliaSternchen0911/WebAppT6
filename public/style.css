@@ -115,3 +115,43 @@ h1 {
     color: #e66b9e;
     margin-bottom: 20px;
 }
+
+/* Stil für den Container, der die Journal-Einträge enthält */
+#journal-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px; /* Abstand zwischen den Kacheln */
+    padding: 0 20px; /* Seitenabstand */
+}
+
+/* Stil für einzelne Journal-Einträge */
+.journal-entry {
+    flex: 0 1 calc(33.333% - 20px); /* Drei Kacheln pro Reihe bei normalem Bildschirm, 20px Abstand berücksichtigen */
+    background-color: #FFF;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 15px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.journal-entry img {
+    width: 100%; /* Sorgt dafür, dass Bilder die Breite der Kacheln ausfüllen */
+    height: auto; /* Behält das Seitenverhältnis der Bilder bei */
+    border-radius: 4px; /* Optional: Abrunden der Ecken der Bilder */
+    margin-bottom: 10px; /* Abstand zwischen Bild und Text */
+}
+
+@media screen and (max-width: 768px) {
+    .journal-entry {
+        flex: 0 1 calc(50% - 20px); /* Zwei Kacheln pro Reihe auf kleineren Bildschirmen */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .journal-entry {
+        flex: 0 1 100%; /* Eine Kachel pro Reihe auf sehr kleinen Bildschirmen */
+    }
+}

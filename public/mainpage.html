@@ -9,7 +9,6 @@
   <link rel="manifest" href="/manifest.json">
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-  <script defer src="mainpage.js"></script>
 </head>
 
 <body>
@@ -19,13 +18,14 @@
     <a href="profile.html"><span class="material-symbols-outlined">account_circle</span> Profil</a>
   </div>
 
+  <script defer src="mainpage.js" type="module"></script>
   <div id="dashboard" class="page">
     <h1>Meine Journals</h1>
     <input type="text" id="search" placeholder="Suche nach Journal Titeln...">
     <div id="add-journal-box">
       <a href="newjournal.html"><span class="material-symbols-outlined">add</span> Journal hinzufügen</a>
     </div>
-    <div class="journal-container">
+    <div id="journal-container" class="journal-container">
 
     </div>
   </div>
