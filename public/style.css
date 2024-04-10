@@ -155,3 +155,123 @@ h1 {
         flex: 0 1 100%; /* Eine Kachel pro Reihe auf sehr kleinen Bildschirmen */
     }
 }
+
+.login-container, .register-container {
+    background-color: #f7f7f7;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 90px auto; /* Vertikal zentriert */
+    max-width: 400px; /* Maximale Breite */
+    border: 2px solid #e66b9e;
+    text-align: center; /* Zentriert den Inhalt horizontal */
+}
+ 
+.input-container {
+    margin-bottom: 20px; /* Abstand zwischen den Eingabefeldern */
+}
+ 
+/* Optionales Styling für die Eingabefelder */
+input[type="email"],
+input[type="password"] {
+    display: block; /* Eingabefelder als Blockelemente anzeigen */
+    width: 100%; /* Volle Breite innerhalb des Containers */
+    padding: 10px; /* Innenabstand */
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    margin-top: 10px;
+    box-sizing: border-box;
+}
+ 
+.login-image {
+  position: absolute; /* Positionierung relativ zum Elternelement */
+  top: 50px; /* Position oberhalb des Containers */
+  left: 50%; /* Zentriert horizontal */
+  transform: translateX(-50%); /* Zentriert horizontal */
+  width: 100px; /* Breite des Bildes */
+  height: auto; /* Automatische Höhe */
+  border-radius: 50%; /* Rundes Bild */
+  border: 2px solid #e66b9e; /* Rahmen um das Bild */
+  background-color: #fff; /* Hintergrundfarbe des Bildes */
+  padding: 5px; /* Innenabstand */
+ 
+}
+
+.login, .register {
+  margin-top: 80px;
+}
+ 
+.registration-link {
+  display: block;
+  margin-top: 40px; /* Erhöht den Abstand zum Button */
+  color: #9c274c; /* Dunkelrosa Farbe */
+  text-decoration: none;
+}
+ 
+.registration-link:hover {
+  text-decoration: underline; /* Unterstrich beim Überfahren des Links */
+}
+ 
+.registerbutton{
+  margin-top: 20px;
+}
+  
+.hidden {
+  display: none;
+}
+ 
+#loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* display: flex; */
+  /* justify-content: center; */
+  /* align-items: center; */
+  background-color: #F7B8D2; /* Rosa Hintergrundfarbe */
+}
+ 
+/* CSS für das Bild im Ladebildschirm */
+#loading-screen img {
+  max-width: 100%;
+  max-height: 100%;
+}
+ 
+.offlinepage {
+  font-family: Arial, sans-serif;
+  background-color: #f7b8d2; /* Rosa Hintergrundfarbe */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+ 
+.containeroffline {
+  text-align: center;
+}
+ 
+.paper-plane {
+  font-size: 100px;
+}
+ 
+.loading-circle {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  border: 3px solid #ccc;
+  border-top-color: #333;
+  border-radius: 50%;
+  animation: spin 1s infinite linear;
+}
+.message {
+  font-weight: 300; /* Dünner */
+  margin-top: 10px;
+}
+ 
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
