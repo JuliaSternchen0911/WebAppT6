@@ -75,12 +75,13 @@ async function saveJournal() {
 
     const userId = user.uid;
     var journalText = document.getElementById('journal-text').value; // Korrektur der ID
+    var journalTitle = document.getElementById('journal-title').value;
     var journalDate = document.getElementById('journal-date').value;
     var imageFile = document.getElementById('image-upload').files[0];
     
     
     // Einfache Validierung
-    if (!journalText.trim() || !journalDate) {
+    if (!journalText.trim() || !journalTitle || !journalDate ) {
         alert("Bitte fülle alle Felder aus.");
         return;
     }
@@ -88,9 +89,9 @@ async function saveJournal() {
     let imageUrl = null;
     if (imageFile) {
         imageUrl = await uploadImage(imageFile);
-        await saveJournalEntry(journalText, journalDate, imageUrl, userId);
+        await saveJournalEntry(userId, journalText, journalTitle, journalDate, imageUrl, currentLocation);
     } else {
-        await saveJournalEntry(journalText, journalDate, null, userId);
+        await saveJournalEntry(userId, null, journalText, journalTitle, journalDate, imageUrl, currentLocation);
     }
 }
 
@@ -102,14 +103,16 @@ async function uploadImage(imageFile) {
 }
 
 
-async function saveJournalEntry(text, date, imageUrl, userId) {
+async function saveJournalEntry(userId, text, title, date, imageUrl, location) {
     // Hier generieren Sie eine neue Document-Referenz
     const docRef = doc(collection(db, "reiseplaner"));
     await setDoc(docRef, {
+        userId: userId,
         text: text,
+        title: title,
         date: date,
         imageUrl: imageUrl, // Speichere die URL des Bildes
-        userId: userId
+        location: location
     });
     console.log("Journal erfolgreich gespeichert mit ID: ", docRef.id);
     alert("Journal erfolgreich gespeichert!");
@@ -123,10 +126,16 @@ function addLocation() {
         alert("Geolocation wird von diesem Browser nicht unterstützt.");
     }
 }
+let currentLocation = null; // Globale Variable zum Speichern des aktuellen Standorts
 
 function showPosition(position) {
+    currentLocation = {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude
+    };
     alert(`Standort hinzugefügt: Latitude: ${position.coords.latitude}, Longitude: ${position.coords.longitude}`);
 }
+
 
 function showError(error) {
     switch (error.code) {
