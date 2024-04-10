@@ -16,17 +16,18 @@
         <a href="newjournal.html"><span class="material-symbols-outlined">add_circle</span> Neues Journal</a>
         <a href="profile.html"><span class="material-symbols-outlined">account_circle</span> Profil</a>
     </div>
+    <script defer src="newjournal.js" type="module"></script>
+
     <div id="new-journal" class="page">
         <h1>Neues Journal erstellen</h1>
         <input type="file" id="image-upload" accept="image/*">
-        <img id="image-preview" src="#" alt="Bildvorschau">
-        <textarea id="text" placeholder="Beschreibe deine Reise..."></textarea>
+        <img id="image-preview" src="#">
+        <textarea id="journal-text" placeholder="Beschreibe deine Reise..."></textarea>
         <button id="add-location-btn">Standort hinzufügen</button>
         <input type="date" id="journal-date">
         <button id="save-journal-btn">Speichern</button>
     </div>
 
-    <script defer src="newjournal.js"></script>
 
 </body>
 
