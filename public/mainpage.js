@@ -1,4 +1,5 @@
-// Importiere die benötigten Firebase-Module am Anfang der Datei
+//Mareike Haffelder
+// Importe der notwendigen Firebase-Authentifizierungsfunktionen und die Firebase-Konfiguration
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getFirestore, collection, getDocs, where, query, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -14,84 +15,88 @@ const firebaseConfig = {
     measurementId: "G-7NRERVS911"
 };
 
-// Initialisiere Firebase
 const app = initializeApp(firebaseConfig);
+const db = getFirestore(app); //Initialisierung Firestore-Datenbank
+const auth = getAuth(app); //Initialisierung der Authentifizierung
 
-// Hole die Firestore-Instanz
-const db = getFirestore(app);
-const auth = getAuth(app);
-
+// EventListener, um sicherzustellen, dass die DOM vollständig geladen ist
 document.addEventListener('DOMContentLoaded', () => {
     onAuthStateChanged(auth, (user) => {
         if (user) {
-            // Nutzer ist angemeldet
+            // Nutzer ist angemeldet; lädt die Jounrals
             loadJournals(user.uid);
         } else {
-            // Nutzer ist nicht angemeldet
+            // Nutzer ist nicht angemeldet, gibt Fehlermeldung
             console.log("Nutzer ist nicht angemeldet.");
-            // Optional: Umleiten zum Login oder eine Meldung anzeigen
         }
     });
 });
 
+//Celine Haupenthal
+// EventListener für das Suchfeld, um Journale basierend auf dem Suchtext zu filtern
 document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('search');
-
     searchInput.addEventListener('input', () => {
         const searchText = searchInput.value.toLowerCase();
         loadJournals(auth.currentUser.uid, searchText);
     });
 });
 
-
+//Mareike Haffelder
+// Funktion zum Laden der Journale aus Firestore, basierend auf Nutzer-ID und optional Suchtext
 async function loadJournals(userId, searchText = '') {
     const journalContainer = document.getElementById('journal-container');
     journalContainer.innerHTML = ''; // Bereinigt den Container vor dem Laden neuer Einträge
 
-    let q = query(collection(db, "reiseplaner"), where("userId", "==", userId));
+    let q = query(collection(db, "reiseplaner"), where("userId", "==", userId)); // Abfrage, um nur Journale des angemeldeten Nutzers zu erhalten
 
     try {
-        // Passt die Abfrage an, um nur Journals des angemeldeten Benutzers zu holen
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
             const data = doc.data();
 
+            // Überprüfung, ob Journaltitel Suchtext enthält, falls Suchtext vorhanden
             if (searchText && !data.title.toLowerCase().includes(searchText)) {
-                return; // Überspringt dieses Journal, wenn der Titel den Suchtext nicht enthält
+                return;
             }
-
+            
+             // Erstellung der Journal-Einträge
             const journalEntry = document.createElement('div');
             journalEntry.classList.add('journal-entry');
 
-            // Optional: Füge ein Bild hinzu, falls vorhanden
+            // Hinzufügen eines Bildes, falls vorhanden
             if (data.imageUrl) {
                 const image = document.createElement('img');
                 image.src = data.imageUrl;
                 journalEntry.appendChild(image);
             }
 
+            // Hinzufügen des Titels
             const title = document.createElement('h3');
-            title.textContent = data.title; // Stellen Sie sicher, dass `data.title` existiert
+            title.textContent = data.title;
             journalEntry.appendChild(title);
 
-            // Fügt das Datum hinzu
+            // Hinzufügen des Datums
             const date = document.createElement('p');
             date.textContent = new Date(data.date).toLocaleDateString();
             journalEntry.appendChild(date);
 
+            // EventListener für das Klicken auf einen Journal-Eintrag & Weiterleitung zur Detail-Seite
             journalEntry.addEventListener('click', () => {
                 window.location.href = `journalDetail.html?journalId=${doc.id}`; // `doc.id` ist die Firestore Dokument-ID
             });
 
+            // Celine Haupenthal
+            //Button zum Löschen eines Journal-Eintrags
             const deleteBtn = document.createElement('button');
             deleteBtn.textContent = 'Löschen';
-            deleteBtn.classList.add('delete-btn'); // Für Stylingzwecke
             deleteBtn.onclick = (event) => {
                 event.stopPropagation(); // Verhindert, dass das Klick-Ereignis weitergeleitet wird
                 deleteJournal(doc.id);
             };
             journalEntry.appendChild(deleteBtn);
 
+            // Hinzufügen des Journal-Eintrags zum Container
             journalContainer.appendChild(journalEntry);
         });
     } catch (error) {
@@ -99,15 +104,17 @@ async function loadJournals(userId, searchText = '') {
     }
 }
 
+//Celine Haupenthal
+// Funktion zum Löschen eines Journal-Eintrags
 async function deleteJournal(journalId) {
+    // Bestätigungsanfrage vor dem Löschen
     if (!confirm("Sind Sie sicher, dass Sie dieses Journal löschen möchten?")) {
-        return; // Abbruch, wenn der Nutzer den Löschvorgang nicht bestätigt
+        return; 
     }
-
     try {
-        await deleteDoc(doc(db, "reiseplaner", journalId));
+        await deleteDoc(doc(db, "reiseplaner", journalId)); //Löscht Journal aus Datenbank
         console.log("Journal erfolgreich gelöscht");
-        loadJournals(auth.currentUser.uid); // Lädt die Journale neu, um die Ansicht zu aktualisieren
+        loadJournals(auth.currentUser.uid); // Lädt die Journals neu, um die Ansicht zu aktualisieren
     } catch (error) {
         console.error("Fehler beim Löschen des Journals: ", error);
     }

@@ -1,3 +1,5 @@
+//Mareike Haffelder
+// Importe der notwendigen Firebase-Authentifizierungsfunktionen und die Firebase-Konfiguration
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getFirestore, collection, addDoc, setDoc, doc } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
 import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
@@ -15,13 +17,14 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const storage = getStorage(app);
+const db = getFirestore(app); //Initialisierung Firestore-Datenbank
+const storage = getStorage(app); //Initialisierung Firebase-Storage
 
+//Prüft Authentifizierungszustand
 const auth = getAuth();
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    // Benutzer ist angemeldet, Sie können hier die Benutzer-ID verwenden
+    // Benutzer ist angemeldet
     console.log("Angemeldet als:", user.uid);
   } else {
     // Benutzer ist nicht angemeldet
@@ -29,25 +32,24 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
+// Event Listener für DOM-Elemente
 document.addEventListener('DOMContentLoaded', function () {
-    // Event Listener für die Bildvorschau
+    //für Bildvorschau
     document.getElementById('image-upload').addEventListener('change', function () {
         showImagePreview(this);
     });
-
-    // Event Listener für den Speichern-Button
+    //für Speichern-Button
     document.getElementById('save-journal-btn').addEventListener('click', function () {
         saveJournal();
     });
-
-    // Event Listener für den Standort hinzufügen Button
+    // für Standort hinzufügen Button
     document.getElementById('add-location-btn').addEventListener('click', function () {
         addLocation();
     });
 });
 
 
-
+// Bildvorschau Funktion
 function showImagePreview(input) {
     if (input.files && input.files[0]) {
         const reader = new FileReader();
@@ -59,10 +61,11 @@ function showImagePreview(input) {
         };
         reader.readAsDataURL(input.files[0]);
     } else {
-        document.getElementById('image-preview').style.display = 'none'; // Bildervorschau ausblenden, wenn kein Bild ausgewählt ist
+        document.getElementById('image-preview').style.display = 'none'; // Bildervorschau wird ausgebelendet, wenn kein Bild vorhanden
     }
 }
 
+// Funktion zum Speichern eines Journal-Eintrags
 async function saveJournal() {
     const auth = getAuth();
     const user = auth.currentUser;
@@ -73,14 +76,15 @@ async function saveJournal() {
         return;
     }
 
+    //Werte aus Formular
     const userId = user.uid;
-    var journalText = document.getElementById('journal-text').value; // Korrektur der ID
+    var journalText = document.getElementById('journal-text').value;
     var journalTitle = document.getElementById('journal-title').value;
     var journalDate = document.getElementById('journal-date').value;
     var imageFile = document.getElementById('image-upload').files[0];
     
     
-    // Einfache Validierung
+    // Überprüfung ob alle Felder ausgefüllt sind
     if (!journalText.trim() || !journalTitle || !journalDate ) {
         alert("Bitte fülle alle Felder aus.");
         return;
@@ -88,36 +92,38 @@ async function saveJournal() {
 
     let imageUrl = null;
     if (imageFile) {
-        imageUrl = await uploadImage(imageFile);
-        await saveJournalEntry(userId, journalText, journalTitle, journalDate, imageUrl, currentLocation);
+        imageUrl = await uploadImage(imageFile); //Aufruf der Bild-Hochladen Funktion
+        await saveJournalEntry(userId, journalText, journalTitle, journalDate, imageUrl, currentLocation); //Speichert Journal-Eintrag
     } else {
-        await saveJournalEntry(userId, null, journalText, journalTitle, journalDate, imageUrl, currentLocation);
+        await saveJournalEntry(userId, null, journalText, journalTitle, journalDate, imageUrl, currentLocation); //Speichert Journal-Eintrag
     }
 }
 
+// Funktion zum Hochladen des Bildes in Firebase Storage
 async function uploadImage(imageFile) {
-    const storageRef = ref(storage, 'images/' + imageFile.name);
+    const storageRef = ref(storage, 'images/' + imageFile.name); //Speicherort
     const snapshot = await uploadBytes(storageRef, imageFile);
-    const imageUrl = await getDownloadURL(snapshot.ref); // Hole die URL des hochgeladenen Bildes
-    return getDownloadURL(snapshot.ref);
+    const imageUrl = await getDownloadURL(snapshot.ref); // Holt die URL des hochgeladenen Bildes
+    return getDownloadURL(snapshot.ref); //Rückgabe der URL
 }
 
-
+// Funktion zum Speichern der Journal-Eintragsdaten in der Firestore Datenbank
 async function saveJournalEntry(userId, text, title, date, imageUrl, location) {
-    // Hier generieren Sie eine neue Document-Referenz
-    const docRef = doc(collection(db, "reiseplaner"));
+    const docRef = doc(collection(db, "reiseplaner")); //Datenbank
     await setDoc(docRef, {
         userId: userId,
         text: text,
         title: title,
         date: date,
-        imageUrl: imageUrl, // Speichere die URL des Bildes
+        imageUrl: imageUrl,
         location: location
     });
     console.log("Journal erfolgreich gespeichert mit ID: ", docRef.id);
     alert("Journal erfolgreich gespeichert!");
 }
 
+//Julia Peters
+// Funktion zum Hinzufügen des aktuellen Standorts
 function addLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition, showError);
@@ -128,6 +134,7 @@ function addLocation() {
 }
 let currentLocation = null; // Globale Variable zum Speichern des aktuellen Standorts
 
+// Funktion zur Verarbeitung der Standortinformation
 function showPosition(position) {
     currentLocation = {
         latitude: position.coords.latitude,
@@ -136,7 +143,7 @@ function showPosition(position) {
     alert(`Standort hinzugefügt: Latitude: ${position.coords.latitude}, Longitude: ${position.coords.longitude}`);
 }
 
-
+// Fehlerbehandlung für Geolocation
 function showError(error) {
     switch (error.code) {
         case error.PERMISSION_DENIED:

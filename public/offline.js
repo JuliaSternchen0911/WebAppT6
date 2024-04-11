@@ -1,16 +1,19 @@
-// Funktion zum Ausblenden des Ladebildschirms und Anzeigen der Hauptseite
+//Celine Haupenthal
+// Funktion zur Initialisierung der Seite
 function initializePage() {
 
-// Überprüfung der Internetverbindung
+    // Überprüfung der Internetverbindung
     checkInternetConnection();
 
-    // Verwende setTimeout, um eine Verzögerung zu erzeugen
+    // erzeugt Verzögerung veim Anzeigen des Hauptinhalts
     setTimeout(() => {
+        // Nach der Verzögerung wird der Ladebildschirm ausgeblendet und der Hauptinhalt angezeigt
         document.getElementById('loading-screen').style.display = 'none';
         document.getElementById('main-content').style.display = 'block';
-    }, 2000); // Verzögerung von 2000 Millisekunden (3 Sekunden)
+    }, 2000); // Verzögerung von 2000 Millisekunden (2 Sekunden)
 }
-// Überprüfen der Internetverbindung
+
+// Funktion zur Überprüfung der Internetverbindung
 function checkInternetConnection() {
     if (!navigator.onLine) {
         // Wenn keine Internetverbindung besteht, umleiten zur offline.html-Seite
@@ -18,11 +21,11 @@ function checkInternetConnection() {
     }
 }
 
-// Ereignishandler für das Laden des Fensters hinzufügen
+// Ereignishandler für das Laden des Fensters
 window.addEventListener('load', initializePage);
 
-// Ereignishandler für das Ändern des Netzwerkstatus hinzufügen
-window.addEventListener('online', checkInternetConnection);
-window.addEventListener('offline', checkInternetConnection);
+// Ereignishandler für das Ändern des Netzwerkstatus 
+window.addEventListener('online', checkInternetConnection); // Wird aufgerufen, wenn die Internetverbindung wiederhergestellt wird
+window.addEventListener('offline', checkInternetConnection); // Wird aufgerufen, wenn die Internetverbindung verloren geht
 
-initializePage();
+initializePage(); // Direkter Aufruf der initializePage-Funktion, um die Initialisierung beim Script-Start zu triggern

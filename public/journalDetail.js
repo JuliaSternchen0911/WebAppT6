@@ -1,3 +1,5 @@
+//Julia Peters & Mareike Haffelder
+// Importe der notwendigen Firebase-Authentifizierungsfunktionen und die Firebase-Konfiguration
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
@@ -12,17 +14,19 @@ const firebaseConfig = {
     measurementId: "G-7NRERVS911"
 };
 
-// Initialisiere Firebase
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+const db = getFirestore(app); //Initialisierung Firestore-Datenbank
 
+// ruft Journal-ID aus der URL ab
 const params = new URLSearchParams(window.location.search);
-const journalId = params.get('journalId'); // Extrahiere die Journal-ID aus der URL
+const journalId = params.get('journalId');
 
+// Wenn Journal-ID vorhanden, wird das entsprechende Dokument aus Firestore abgerufen
 if (journalId) {
-    const docRef = doc(db, "reiseplaner", journalId);
+    const docRef = doc(db, "reiseplaner", journalId); //Datenbank
     getDoc(docRef).then((doc) => {
       if (doc.exists()) {
+        // Wenn das Dokument existiert, werden Daten im Detail-Container angezeigt
         const data = doc.data();
         const container = document.getElementById('journalDetailContainer');
         container.innerHTML = `
@@ -31,6 +35,7 @@ if (journalId) {
           <p><strong>${new Date(data.date).toLocaleDateString()}</strong></p>
           <p>${data.text}</p>
         `;
+        // Wenn Standort vorhanden, wird ein Link zur Kartenansicht hinzugefügt
         if (data.location) {
             const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${data.location.latitude},${data.location.longitude}`;
             container.innerHTML += `<a href="${mapsUrl}" target="_blank">Auf Karte anzeigen</a>`;
@@ -39,6 +44,6 @@ if (journalId) {
         console.log("Kein Dokument gefunden!");
       }
     }).catch((error) => {
-      console.error("Fehler beim Laden des Dokuments:", error);
+      console.error("Fehler beim Laden des Dokuments:", error); //Fehlermeldung in der Konsole
     });
   }
